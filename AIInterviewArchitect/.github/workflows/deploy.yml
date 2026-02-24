@@ -2,7 +2,7 @@ name: Deploy Native AOT to Lambda
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "master", "development" ]
     paths:
       - 'backend/**'
   workflow_dispatch:
