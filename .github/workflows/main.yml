@@ -25,7 +25,7 @@ jobs:
 
     - name: Publish Native AOT
       run: |
-        dotnet publish AllInterviewArchitect/backend/src/InterviewLambda/InterviewLambda.csproj \
+        dotnet publish AIInterviewArchitect/backend/src/InterviewLambda/InterviewLambda.csproj \
         -c Release -r linux-x64 --self-contained \
         -o publish_output /p:StripSymbols=true /p:AssemblyName=bootstrap
 
