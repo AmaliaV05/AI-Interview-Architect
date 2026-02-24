@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "master", "development" ]
     paths:
-      - 'backend/**'
+      - 'AIInterviewArchitect/backend/**'
   workflow_dispatch:
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
 
     - name: Publish Native AOT
       run: |
-        dotnet publish backend/src/InterviewLambda/InterviewLambda.csproj -c Release -r linux-x64 --self-contained \
+        dotnet publish AIInterviewArchitect/backend/src/InterviewLambda/InterviewLambda.csproj -c Release -r linux-x64 --self-contained \
         -o publish_output /p:StripSymbols=true /p:AssemblyName=bootstrap
 
     - name: Create Deployment Package
