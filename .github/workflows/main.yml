@@ -1,10 +1,48 @@
-name: Test Trigger
-on: 
+name: Deploy Native AOT to Lambda
+
+on:
   push:
-    branches: [ "development" ]
+    branches: [ "master", "development" ]
+    paths:
+      - 'AllInterviewArchitect/backend/**'
   workflow_dispatch:
+
 jobs:
-  test:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "It works!"
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Install build dependencies
+      run: sudo apt-get update && sudo apt-get install -y clang zlib1g-dev
+
+    - name: Publish Native AOT
+      run: |
+        dotnet publish AllInterviewArchitect/backend/src/InterviewLambda/InterviewLambda.csproj \
+        -c Release -r linux-x64 --self-contained \
+        -o publish_output /p:StripSymbols=true /p:AssemblyName=bootstrap
+
+    - name: Create Deployment Package
+      run: |
+        cd publish_output
+        zip ../deploy.zip bootstrap
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Deploy to AWS Lambda
+      run: |
+        aws lambda update-function-code \
+          --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} \
+          --zip-file fileb://deploy.zip
