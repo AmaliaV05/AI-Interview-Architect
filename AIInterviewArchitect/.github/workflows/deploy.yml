@@ -5,6 +5,7 @@ on:
     branches: [ "development" ]
     paths:
       - 'backend/**'
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
