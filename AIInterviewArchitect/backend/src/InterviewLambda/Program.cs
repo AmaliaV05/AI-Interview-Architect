@@ -15,5 +15,5 @@ builder.Services.AddAWSLambdaHosting(
 var app = builder.Build();
 
 app.MapGet("/", () => "API is active");
-Console.WriteLine("Deployment Version: 1.0.2 - AOT Active");
+
 app.Run();
