@@ -20,6 +20,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "aws-amplify": "^6.16.2"
+    "@aws-amplify/ui-angular": "^5.0.0",
+    "aws-amplify": "^6.16.2",
+    "aws-lambda": "^1.0.7"
   }
 }

@@ -1,0 +1,16 @@
+<amplify-authenticator [signUpAttributes]="['nickname']">
+  <ng-template
+    amplifySlot="authenticated"
+    let-user="user"    
+    let-signOut="signOut"
+  >
+    <div class="welcome-container">
+      <div class="welcome-message">
+        <h1>Welcome {{ nickname }}!</h1>
+      </div>
+      <div class="sign-out">
+        <button (click)="signOut()">Sign Out</button>
+      </div>
+    </div>
+  </ng-template>
+</amplify-authenticator>
