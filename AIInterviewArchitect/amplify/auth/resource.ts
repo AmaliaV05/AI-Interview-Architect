@@ -7,5 +7,11 @@ export const auth = defineAuth({
    },
   triggers: {
     preSignUp: preSignUp
+  },
+  userAttributes: {
+    nickname: {
+      mutable: true,
+      required: true
+    }
   }
 });
